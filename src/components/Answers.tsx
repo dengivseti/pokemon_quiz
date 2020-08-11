@@ -3,6 +3,8 @@ import {Paper, List, ListItem, ListItemIcon, Checkbox, ListItemText} from "@mate
 import {IPokemon} from "../interface"
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import {QuizContext} from "../context/QuizState"
+import error from "../assets/sound/error.wav"
+import win from "../assets/sound/win.wav"
 
 interface IAnswerProps {
     pokemons: Array<IPokemon>
@@ -12,6 +14,12 @@ interface IAnswerProps {
 export const Answers: React.FC<IAnswerProps> = ({pokemons, goodId}) => {
     const {correctAnswer, addAttemp, countScore, question, clickItems} = useContext(QuizContext)
     const [checked, setChecked] = useState([] as any)
+    const errorAudio = new Audio(error)
+    const winAudio = new Audio(win)
+
+    const playSound = (audioFile: any) => {
+        audioFile.play()
+    }
 
     useEffect(() => {
         setChecked([])
@@ -26,12 +34,14 @@ export const Answers: React.FC<IAnswerProps> = ({pokemons, goodId}) => {
             setChecked(newChecked)
             if (goodId === pokemon.id) {
                 countScore()
+                playSound(winAudio)
                 return
+            }else{
+                playSound(errorAudio)
             }
             addAttemp()
         }
     }
-
 
     return (
         <Paper>
