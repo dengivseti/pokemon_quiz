@@ -9,13 +9,19 @@ export const ResultPage: React.FC = () => {
         <Paper >
             <Grid container justify='center'>
                 <Grid item xs={12}>
-                    <Typography align='center' variant='h3'>Поздравляем!</Typography>
+                    <Typography align='center' variant='h3'>Congratulations!</Typography>
                     <Typography align='center' variant='h6'>
-                        Вы прошли викторину и набрали {score} из 30 возможных баллов
+                        You completed the quiz and scored {score} out of 30 possible points
                     </Typography>
                 </Grid>
                 <Grid item xs={10}>
-                    <Button variant="contained" color="primary" fullWidth={true} onClick={repeatQuiz}>Попробовать еще раз!</Button>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth={true}
+                        onClick={repeatQuiz}>
+                        Try again!
+                    </Button>
                 </Grid>
             </Grid>
         </Paper>
