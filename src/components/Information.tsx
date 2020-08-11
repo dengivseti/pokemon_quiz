@@ -16,8 +16,11 @@ const useStyle = makeStyles((theme) => ({
         display: 'block',
         maxWidth: '100%',
         maxHeight: '100%',
-        width: 150,
-        height: 150
+        width: 200,
+        height: 200
+    },
+    info: {
+        paddingTop: theme.spacing(2)
     }
 }))
 
@@ -59,7 +62,7 @@ export const Information: React.FC = () => {
                     </Grid>
                 </Grid>
             </Grid>
-            <Grid>
+            <Grid className={classes.info}>
                 <Typography variant='body1'>
                     {selectPokemon.description}
                 </Typography>
