@@ -1,45 +1,44 @@
-import React, { useState } from "react"
+import React, {useContext, useEffect, useState} from "react"
 import {Paper, List, ListItem, ListItemIcon, Checkbox, ListItemText} from "@material-ui/core"
 import {IPokemon} from "../interface"
-import {makeStyles} from "@material-ui/core/styles"
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
+import {QuizContext} from "../context/QuizState"
 
 interface IAnswerProps {
     pokemons: Array<IPokemon>
     goodId: number
-    onSelected(id:number): void
 }
 
-const useStyle = makeStyles((theme) => ({
-    button: {
-        textAlign: 'left',
-    }
-}))
-
-export const Answers: React.FC<IAnswerProps> = ({pokemons, goodId, onSelected}) => {
-    const classes = useStyle()
+export const Answers: React.FC<IAnswerProps> = ({pokemons, goodId}) => {
+    const {correctAnswer, addAttemp, countScore, question, clickItems} = useContext(QuizContext)
     const [checked, setChecked] = useState([] as any)
 
-    const selectToggle = (value: number) => () => {
-        const currentIndex = checked.indexOf(value)
+    useEffect(() => {
+        setChecked([])
+    }, [question])
+
+    const selectToggle = (pokemon: IPokemon) => () => {
+        const currentIndex = checked.indexOf(pokemon.id)
         const newChecked = [...checked]
-        onSelected(value)
-        if (currentIndex === -1) {
-            newChecked.push(value)
+        clickItems(pokemon)
+        if (currentIndex === -1 && !correctAnswer) {
+            newChecked.push(pokemon.id)
             setChecked(newChecked)
+            if (goodId === pokemon.id) {
+                countScore()
+                return
+            }
+            addAttemp()
         }
     }
 
-    const colorItem = () => {
-        return "primary"
-    }
 
     return (
         <Paper>
             <List>
                 {pokemons.map((pokemon) => {
                     return (
-                        <ListItem key={pokemon.id} dense button onClick={selectToggle(pokemon.id)}>
+                        <ListItem key={pokemon.id} dense button onClick={selectToggle(pokemon)}>
                             <ListItemIcon>
                                 <Checkbox
                                     checked={checked.indexOf(pokemon.id) !== -1}

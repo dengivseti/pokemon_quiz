@@ -1,22 +1,21 @@
-import React, {useState} from "react"
+import React, {useContext} from "react"
 import {Question} from "../components/Question"
 import {Grid, Button} from "@material-ui/core"
 import {Answers} from "../components/Answers"
 import {Information} from "../components/Information"
 import {pokemonData} from "../pokemon"
-import {IPokemon} from "../interface"
+import {QuizContext} from "../context/QuizState"
+import {ResultPage} from "./ResultPage"
 
 export const QuizPage: React.FC = () => {
-    const intPokemon = 1
-    const [selectPokemon, setSelectPokemon] = useState<IPokemon | null>()
-    const questionPokemon = pokemonData[intPokemon]
-    const listAnswerPokemons = pokemonData
+    const {quiz, answers, question, correctAnswer, nextQuestion} = useContext(QuizContext)
+    const questionPokemon = pokemonData[answers[question]]
+    const listPokemon = quiz[question]
 
-    const selectedPokemon = (id: number) => {
-        const findPokemon = pokemonData.find(p => p.id === id)
-        if (findPokemon) {
-            setSelectPokemon(findPokemon)
-        }
+    if (question > 5) {
+        return (
+            <ResultPage/>
+        )
     }
 
     return (
@@ -28,17 +27,16 @@ export const QuizPage: React.FC = () => {
                 <Grid container spacing={2}>
                     <Grid item xs={6}>
                         <Answers
-                            pokemons={listAnswerPokemons}
-                            goodId={intPokemon}
-                            onSelected={(id: number) => selectedPokemon(id)}
+                            pokemons={listPokemon}
+                            goodId={answers[question]}
                         />
                     </Grid>
                     <Grid item xs={6}>
-                        <Information pokemon={selectPokemon!}/>
+                        <Information/>
                     </Grid>
                 </Grid>
                 <Grid item xs={12}>
-                    <Button variant="contained" color="primary" fullWidth={true}>Next level</Button>
+                    <Button variant="contained" color="primary" fullWidth={true} disabled={(!correctAnswer) ? true : false} onClick={nextQuestion}>Next level</Button>
                 </Grid>
             </Grid>
         </div>

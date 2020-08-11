@@ -1,8 +1,8 @@
-import React from "react"
+import React, {useContext} from "react"
 import {Divider, Grid, Paper, Typography} from "@material-ui/core"
-import {makeStyles} from "@material-ui/core/styles";
-import AudioPlayer from "material-ui-audio-player/dist";
-import {IPokemon} from "../interface";
+import {makeStyles} from "@material-ui/core/styles"
+import AudioPlayer from "material-ui-audio-player/dist"
+import {QuizContext} from "../context/QuizState"
 
 const useStyle = makeStyles((theme) => ({
     root: {
@@ -21,13 +21,11 @@ const useStyle = makeStyles((theme) => ({
     }
 }))
 
-interface IInformationProps {
-    pokemon: IPokemon | null
-}
 
-export const Information: React.FC<IInformationProps> = ({pokemon}) => {
+export const Information: React.FC = () => {
+    const {selectPokemon} = useContext(QuizContext)
     const classes = useStyle()
-    if (!pokemon) {
+    if (!selectPokemon) {
         return (
             <Paper className={classes.paper}>
                 <Typography gutterBottom variant='h5' align='center'>
@@ -41,21 +39,21 @@ export const Information: React.FC<IInformationProps> = ({pokemon}) => {
         <Paper className={classes.paper}>
             <Grid container spacing={2}>
                 <Grid item>
-                    <img className={classes.image} alt='pokemon' src={pokemon.image}/>
+                    <img className={classes.image} alt='pokemon' src={selectPokemon.image}/>
                 </Grid>
                 <Grid item xs={12} sm container>
                     <Grid item xs container direction='column' spacing={1}>
                         <Grid item xs>
                             <Typography gutterBottom variant='h5'>
-                                {pokemon.name}
+                                {selectPokemon.name}
                             </Typography>
                             <Divider/>
                             <Typography gutterBottom variant='body2'>
-                                {pokemon.species.join(' ')}
+                                {selectPokemon.species.join(' ')}
                             </Typography>
                             <Divider/>
                             <Grid style={{paddingLeft: 20, paddingTop: 20}}>
-                                <AudioPlayer src={pokemon.audio}/>
+                                <AudioPlayer src={selectPokemon.audio}/>
                             </Grid>
                         </Grid>
                     </Grid>
@@ -63,7 +61,7 @@ export const Information: React.FC<IInformationProps> = ({pokemon}) => {
             </Grid>
             <Grid>
                 <Typography variant='body1'>
-                    {pokemon.description}
+                    {selectPokemon.description}
                 </Typography>
             </Grid>
         </Paper>
