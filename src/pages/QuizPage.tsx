@@ -13,7 +13,7 @@ const useStyle = makeStyles((theme) => ({
         paddingBottom: theme.spacing(2)
     },
     button: {
-        paddingTop: theme.spacing(2)
+        paddingTop: theme.spacing(6)
     }
 }))
 
@@ -35,14 +35,14 @@ export const QuizPage: React.FC = () => {
                 <Grid item xs={12} className={classes.blockQuestion}>
                     <Question pokemon={questionPokemon!}/>
                 </Grid>
-                <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6}>
+                <Grid container spacing={2} alignItems='stretch'>
+                    <Grid item xs={12} sm={6} zeroMinWidth>
                         <Answers
                             pokemons={listPokemon}
                             goodId={answers[question]}
                         />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12} sm={6} zeroMinWidth>
                         <Information/>
                     </Grid>
                 </Grid>

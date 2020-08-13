@@ -5,13 +5,25 @@ import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord'
 import {QuizContext} from "../context/QuizState"
 import error from "../assets/sound/error.wav"
 import win from "../assets/sound/win.wav"
+import {makeStyles} from "@material-ui/core/styles";
 
 interface IAnswerProps {
     pokemons: Array<IPokemon>
     goodId: number
 }
 
+const useStyle = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+    },
+    paper: {
+        padding: theme.spacing(2),
+        height: "100%"
+    }
+}))
+
 export const Answers: React.FC<IAnswerProps> = ({pokemons, goodId}) => {
+    const classes = useStyle()
     const {correctAnswer, addAttemp, countScore, question, clickItems} = useContext(QuizContext)
     const [checked, setChecked] = useState([] as any)
     const errorAudio = new Audio(error)
@@ -44,7 +56,7 @@ export const Answers: React.FC<IAnswerProps> = ({pokemons, goodId}) => {
     }
 
     return (
-        <Paper>
+        <Paper className={classes.paper}>
             <List>
                 {pokemons.map((pokemon) => {
                     return (

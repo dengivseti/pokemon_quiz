@@ -10,6 +10,7 @@ const useStyle = makeStyles((theme) => ({
     },
     paper: {
         padding: theme.spacing(2),
+        height: "100%"
     },
     image: {
         margin: 'auto',
@@ -21,7 +22,7 @@ const useStyle = makeStyles((theme) => ({
     },
     info: {
         paddingTop: theme.spacing(2)
-    }
+    },
 }))
 
 
@@ -31,9 +32,13 @@ export const Information: React.FC = () => {
     if (!selectPokemon) {
         return (
             <Paper className={classes.paper}>
-                <Typography gutterBottom variant='h5' align='center'>
+                <Typography
+                    gutterBottom
+                    variant='h5'
+                    align='center'
+                >
                     Listen to the player. <br/>
-                    Select a bird from the list
+                    Select a pokemon from the list
                 </Typography>
             </Paper>
         )
@@ -56,7 +61,7 @@ export const Information: React.FC = () => {
                             </Typography>
                             <Divider/>
                             <Grid style={{paddingLeft: 20, paddingTop: 20}}>
-                                <AudioPlayer src={selectPokemon.audio}/>
+                                <AudioPlayer src={selectPokemon.audio} variation="primary"/>
                             </Grid>
                         </Grid>
                     </Grid>
