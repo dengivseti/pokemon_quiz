@@ -11,7 +11,7 @@ const useStyle = makeStyles((theme) => ({
         flexGrow: 1,
     },
     paper: {
-        padding: theme.spacing(1),
+        padding: theme.spacing(2),
     },
     image: {
         margin: 'auto',
@@ -55,7 +55,7 @@ export const Question: React.FC<IQuestionProps> = ({pokemon}) => {
                                 <Divider/>
                             </Grid>
                             <Grid item xs style={{paddingLeft: 20, paddingTop: 20}}>
-                                <AudioPlayer src={pokemon.audio}/>
+                                <AudioPlayer src={pokemon.audio} variation="primary" autoplay={true}/>
                             </Grid>
                         </Grid>
 
